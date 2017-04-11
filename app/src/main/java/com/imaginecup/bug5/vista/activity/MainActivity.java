@@ -10,10 +10,13 @@ import com.github.pwittchen.swipe.library.SwipeListener;
 import com.imaginecup.bug5.vista.R;
 import com.imaginecup.bug5.vista.fragment.MainFragment;
 import com.imaginecup.bug5.vista.utils.Constants;
+import com.mapzen.speakerbox.Speakerbox;
 
 public class MainActivity extends AppCompatActivity {
 
     Swipe swipe;
+    Speakerbox speakerbox;
+
     TextView tvStatus;
 
     @Override
@@ -22,42 +25,52 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 /*        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.contentContainer, MainFragment.newInstance(), Constants.Fragments.MAIN_FRAGMENT)
+                .replace(R.id.contentContainer, MainFragment.newInstance(), Constants.Fragments.MAIN FRAGMENT)
                 .commit();*/
 
         tvStatus = (TextView) findViewById(R.id.tvStatus);
+
         swipe = new Swipe();
+        speakerbox = new Speakerbox(getApplication());
         swipe.addListener(new SwipeListener() {
             @Override public void onSwipingLeft(final MotionEvent event) {
-                tvStatus.setText("SWIPING_LEFT");
+                tvStatus.setText("SWIPING LEFT");
+                speakerbox.play("SWIPING LEFT");
             }
 
             @Override public void onSwipedLeft(final MotionEvent event) {
-                tvStatus.setText("SWIPED_LEFT");
+                tvStatus.setText("SWIPED LEFT");
+                speakerbox.play("SWIPED LEFT");
             }
 
             @Override public void onSwipingRight(final MotionEvent event) {
-                tvStatus.setText("SWIPING_RIGHT");
+                tvStatus.setText("SWIPING RIGHT");
+                speakerbox.play("SWIPING RIGHT");
             }
 
             @Override public void onSwipedRight(final MotionEvent event) {
-                tvStatus.setText("SWIPED_RIGHT");
+                tvStatus.setText("SWIPED RIGHT");
+                speakerbox.play("SWIPED RIGHT");
             }
 
             @Override public void onSwipingUp(final MotionEvent event) {
-                tvStatus.setText("SWIPING_UP");
+                tvStatus.setText("SWIPING UP");
+                speakerbox.play("SWIPING UP");
             }
 
             @Override public void onSwipedUp(final MotionEvent event) {
-                tvStatus.setText("SWIPED_UP");
+                tvStatus.setText("SWIPED UP");
+                speakerbox.play("SWIPED UP");
             }
 
             @Override public void onSwipingDown(final MotionEvent event) {
-                tvStatus.setText("SWIPING_DOWN");
+                tvStatus.setText("SWIPING DOWN");
+                speakerbox.play("SWIPING DOWN");
             }
 
             @Override public void onSwipedDown(final MotionEvent event) {
-                tvStatus.setText("SWIPED_DOWN");
+                tvStatus.setText("SWIPED DOWN");
+                speakerbox.play("SWIPED DOWN");
             }
         });
 
