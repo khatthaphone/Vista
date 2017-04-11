@@ -29,4 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.github.pwittchen:swipe:0.0.1'
     compile project(':TheCheeseLibrary')
+    compile 'com.mapzen.android:speakerbox:1.4.1'
 }
