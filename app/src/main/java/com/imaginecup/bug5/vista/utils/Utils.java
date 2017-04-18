@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.provider.Settings;
 
-import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
+import com.imaginecup.bug5.vista.manager.Contextor;
+
 
 /**
  * Created by nuuneoi on 10/16/2014.
