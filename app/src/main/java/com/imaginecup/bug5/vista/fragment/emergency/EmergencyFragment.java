@@ -22,10 +22,9 @@ public class EmergencyFragment extends Fragment {
         super();
     }
 
-    public static EmergencyFragment newInstance(Dao dao) {
+    public static EmergencyFragment newInstance() {
         EmergencyFragment fragment = new EmergencyFragment();
         Bundle args = new Bundle();
-        args.putParcelable("dao", dao);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,8 +36,6 @@ public class EmergencyFragment extends Fragment {
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
-
-        dao = getArguments().getParcelable("dao");
     }
 
     @Override
