@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.imaginecup.bug5.vista.R;
+import com.mapzen.speakerbox.Speakerbox;
 
 
 /**
  * Created by nuuneoi on 11/16/2014.
  */
 public class CallerFragment extends Fragment {
+
+    Speakerbox speakerbox;
 
     public CallerFragment() {
         super();
@@ -33,6 +36,8 @@ public class CallerFragment extends Fragment {
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
+
+        speakerbox = new Speakerbox(getActivity().getApplication());
     }
 
     @Override
@@ -53,6 +58,7 @@ public class CallerFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
+        speakerbox.play("You are on Caller");
     }
 
     @Override

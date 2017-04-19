@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.github.pwittchen.swipe.library.Swipe;
 import com.github.pwittchen.swipe.library.SwipeListener;
 import com.imaginecup.bug5.vista.R;
+import com.mapzen.speakerbox.Speakerbox;
 
 
 /**
@@ -20,6 +21,7 @@ import com.imaginecup.bug5.vista.R;
 public class MainFragment extends Fragment {
 
     Swipe swipe;
+    Speakerbox speakerbox;
     TextView tvStatus;
 
     public MainFragment() {
@@ -41,6 +43,7 @@ public class MainFragment extends Fragment {
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
 
+        speakerbox = new Speakerbox(getActivity().getApplication());
     }
 
     @Override
@@ -61,6 +64,8 @@ public class MainFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
+
+        speakerbox.play("You are on Main Page");
     }
 
     @Override

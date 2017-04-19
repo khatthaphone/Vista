@@ -34,53 +34,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportFragmentManager().beginTransaction().add(R.id.contentContainer, MainFragment.newInstance(), Constants.Fragments.MAIN_FRAGMENT).commit();
         currentFragment = Constants.Fragments.MAIN_FRAGMENT;
-
-        switchFragment(DIRECTION_NONE, currentFragment);
 
         swipe = new Swipe();
         speakerbox = new Speakerbox(getApplication());
         swipe.addListener(new SwipeListener() {
             @Override
             public void onSwipingLeft(final MotionEvent event) {
-                speakerbox.play("SWIPING LEFT");
             }
 
             @Override
             public void onSwipedLeft(final MotionEvent event) {
-                speakerbox.play("SWIPED LEFT");
                 switchFragment(DIRECTION_LEFT, currentFragment);
             }
 
             @Override
             public void onSwipingRight(final MotionEvent event) {
-                speakerbox.play("SWIPING RIGHT");
             }
 
             @Override
             public void onSwipedRight(final MotionEvent event) {
-                speakerbox.play("SWIPED RIGHT");
                 switchFragment(DIRECTION_RIGHT, currentFragment);
             }
 
             @Override
             public void onSwipingUp(final MotionEvent event) {
-                speakerbox.play("SWIPING up");
             }
 
             @Override
             public void onSwipedUp(final MotionEvent event) {
-                speakerbox.play("SWIPED up");
             }
 
             @Override
             public void onSwipingDown(final MotionEvent event) {
-                speakerbox.play("SWIPING DOWN");
             }
 
             @Override
             public void onSwipedDown(final MotionEvent event) {
-                speakerbox.play("SWIPED DOWN");
+
             }
         });
 
@@ -94,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void switchFragment(int direction, String currentFragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = MainFragment.newInstance();
-        String fragmentTag = Constants.Fragments.MAIN_FRAGMENT;
+        Fragment fragment = null;
+        String fragmentTag = null;
 
         switch (currentFragment) {
             case Constants.Fragments.MAIN_FRAGMENT:
@@ -137,10 +129,13 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (direction) {
                     case DIRECTION_LEFT:
-
                         break;
                     case DIRECTION_RIGHT:
+                        fragment = MainFragment.newInstance();
+                        fragmentTag = Constants.Fragments.MAIN_FRAGMENT;
+                        fragmentTransaction.setCustomAnimations(R.anim.anim_swipe_from_left, R.anim.anim_swipe_to_right);
 
+                        Toast.makeText(getApplicationContext(), Constants.Fragments.MAIN_FRAGMENT, Toast.LENGTH_SHORT).show();
                         break;
                     case DIRECTION_DOWN:
 
@@ -153,7 +148,11 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (direction) {
                     case DIRECTION_LEFT:
+                        fragment = MainFragment.newInstance();
+                        fragmentTag = Constants.Fragments.MAIN_FRAGMENT;
+                        fragmentTransaction.setCustomAnimations(R.anim.anim_swipe_from_right, R.anim.anim_swipe_to_left);
 
+                        Toast.makeText(getApplicationContext(), Constants.Fragments.MAIN_FRAGMENT, Toast.LENGTH_SHORT).show();
                         break;
                     case DIRECTION_RIGHT:
 
@@ -182,9 +181,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-
-        fragmentTransaction.replace(R.id.contentContainer, fragment, fragmentTag);
-        fragmentTransaction.commit();
-        this.currentFragment = fragmentTag;
+        if (fragment != null && fragmentTag != null) {
+            fragmentTransaction.replace(R.id.contentContainer, fragment, fragmentTag);
+            fragmentTransaction.commit();
+            this.currentFragment = fragmentTag;
+        }
     }
 }
