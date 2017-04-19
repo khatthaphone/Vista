@@ -3,6 +3,9 @@ package com.imaginecup.bug5.vista.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GestureDetectorCompat;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +15,10 @@ import android.widget.TextView;
 import com.github.pwittchen.swipe.library.Swipe;
 import com.github.pwittchen.swipe.library.SwipeListener;
 import com.imaginecup.bug5.vista.R;
+import com.imaginecup.bug5.vista.manager.Contextor;
+import com.mapzen.speakerbox.Speakerbox;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -21,6 +28,10 @@ public class MainFragment extends Fragment {
 
     Swipe swipe;
     TextView tvStatus;
+
+    GestureDetectorCompat detectorCompat;
+
+    Speakerbox speakerbox;
 
     public MainFragment() {
         super();
@@ -61,6 +72,48 @@ public class MainFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
+
+        speakerbox = new Speakerbox(getActivity().getApplication());
+
+        detectorCompat = new GestureDetectorCompat(getActivity(), new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                Log.e(TAG, "onLongPress:  " );
+                speakerbox.play("Now you are Smart Home");
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                return false;
+            }
+        });
+
+        rootView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return detectorCompat.onTouchEvent(event);
+            }
+        });
     }
 
     @Override
@@ -73,5 +126,4 @@ public class MainFragment extends Fragment {
     private void onRestoreInstanceState(Bundle savedInstanceState) {
         // Restore Instance (Fragment level's variables) State here
     }
-
 }

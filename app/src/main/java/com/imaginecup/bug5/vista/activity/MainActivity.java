@@ -1,10 +1,13 @@
 package com.imaginecup.bug5.vista.activity;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.github.pwittchen.swipe.library.Swipe;
@@ -13,29 +16,24 @@ import com.imaginecup.bug5.vista.R;
 import com.imaginecup.bug5.vista.fragment.MainFragment;
 import com.imaginecup.bug5.vista.fragment.smarthome.SmartHomeFragment;
 import com.mapzen.speakerbox.Speakerbox;
-import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     Swipe swipe;
     Speakerbox speakerbox;
 
     TextView tvStatus;
 
-    int x = 0;
-    ArrayList<Fragment> screenList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Add fragment to the List
-        screenList = new ArrayList<>();
-        screenList.add(MainFragment.newInstance());
-        screenList.add(SmartHomeFragment.newInstance());
-
-        tvStatus = (TextView) findViewById(R.id.tvStatus);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, MainFragment.newInstance())
+                .commit();
+//
+//        tvStatus = (TextView) findViewById(R.id.tvStatus);
 
         swipe = new Swipe();
         speakerbox = new Speakerbox(getApplication());
@@ -48,16 +46,14 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onSwipedLeft(final MotionEvent event) {
                 //tvStatus.setText("SWIPED LEFT");
                 speakerbox.play("SWIPED LEFT");
-                x--;
             }
 
             @Override public void onSwipingRight(final MotionEvent event) {
                 //tvStatus.setText("SWIPING RIGHT");
                 speakerbox.play("SWIPING RIGHT");
 
-                Log.e("SwipeLog", "x : " + x);
-                x++;
-
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, SmartHomeFragment.newInstance()).commit();
             }
 
             @Override public void onSwipedRight(final MotionEvent event) {
@@ -86,14 +82,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+  }
 
     @Override public boolean dispatchTouchEvent(MotionEvent event) {
         swipe.dispatchTouchEvent(event);
         return super.dispatchTouchEvent(event);
-    }
-
-    private void switchScreenFragment(int position) {
-
     }
 }
