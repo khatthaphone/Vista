@@ -13,14 +13,14 @@ import com.imaginecup.bug5.vista.R;
 /**
  * Created by nuuneoi on 11/16/2014.
  */
-public class CallerFrament extends Fragment {
+public class CallerFragment extends Fragment {
 
-    public CallerFrament() {
+    public CallerFragment() {
         super();
     }
 
-    public static CallerFrament newInstance() {
-        CallerFrament fragment = new CallerFrament();
+    public static CallerFragment newInstance() {
+        CallerFragment fragment = new CallerFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -38,7 +38,7 @@ public class CallerFrament extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_smart_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_caller, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
