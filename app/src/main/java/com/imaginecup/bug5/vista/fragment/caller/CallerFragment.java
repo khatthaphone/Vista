@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.imaginecup.bug5.vista.R;
+import com.mapzen.speakerbox.Speakerbox;
 
 
 /**
  * Created by nuuneoi on 11/16/2014.
  */
 public class CallerFragment extends Fragment {
+
+    Speakerbox speakerbox;
 
     public CallerFragment() {
         super();
@@ -31,6 +34,8 @@ public class CallerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
 
+        speakerbox = new Speakerbox(getActivity().getApplication());
+        speakerbox.play("Caller Screen");
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
     }

@@ -27,7 +27,6 @@ import static android.content.ContentValues.TAG;
 public class MainFragment extends Fragment {
 
     Swipe swipe;
-    TextView tvStatus;
 
     GestureDetectorCompat detectorCompat;
 
@@ -48,6 +47,9 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
+
+        speakerbox = new Speakerbox(getActivity().getApplication());
+        speakerbox.play("Main Screen");
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
@@ -73,8 +75,6 @@ public class MainFragment extends Fragment {
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
 
-        speakerbox = new Speakerbox(getActivity().getApplication());
-
         detectorCompat = new GestureDetectorCompat(getActivity(), new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
@@ -98,8 +98,7 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                Log.e(TAG, "onLongPress:  " );
-                speakerbox.play("Now you are Smart Home");
+                //speakerbox.play("Now you are Main Screen");
             }
 
             @Override

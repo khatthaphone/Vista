@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.imaginecup.bug5.vista.R;
 import com.imaginecup.bug5.vista.dao.Dao;
+import com.mapzen.speakerbox.Speakerbox;
 
 
 /**
@@ -17,6 +18,8 @@ import com.imaginecup.bug5.vista.dao.Dao;
 public class EmergencyFragment extends Fragment {
 
     Dao dao;
+
+    Speakerbox speakerbox;
 
     public EmergencyFragment() {
         super();
@@ -33,6 +36,9 @@ public class EmergencyFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
+
+        speakerbox = new Speakerbox(getActivity().getApplication());
+        speakerbox.play("Emergency Screen");
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwipedUp(final MotionEvent event) {
-                speakerbox.play("SWIPED up");
+                switchFragment(DIRECTION_UP, currentFragment);
             }
 
             @Override
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwipedDown(final MotionEvent event) {
-                speakerbox.play("SWIPED DOWN");
+                switchFragment(DIRECTION_DOWN, currentFragment);
             }
         });
 

@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.imaginecup.bug5.vista.R;
+import com.mapzen.speakerbox.Speakerbox;
 
 
 /**
  * Created by nuuneoi on 11/16/2014.
  */
 public class SmartHomeFragment extends Fragment {
+
+    Speakerbox speakerbox;
 
     public SmartHomeFragment() {
         super();
@@ -30,6 +33,9 @@ public class SmartHomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
+
+        speakerbox = new Speakerbox(getActivity().getApplication());
+        speakerbox.play("Smart Home Screen");
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
