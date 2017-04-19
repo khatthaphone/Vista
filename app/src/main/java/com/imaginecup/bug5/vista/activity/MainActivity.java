@@ -8,17 +8,12 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 
 import com.github.pwittchen.swipe.library.Swipe;
-import com.github.pwittchen.swipe.library.SwipeEvent;
 import com.github.pwittchen.swipe.library.SwipeListener;
 import com.imaginecup.bug5.vista.R;
 import com.imaginecup.bug5.vista.fragment.MainFragment;
-import com.imaginecup.bug5.vista.fragment.emergency.SmartHomeFragment;
-import com.imaginecup.bug5.vista.utils.Constants;
+import com.imaginecup.bug5.vista.fragment.smarthome.SmartHomeFragment;
 import com.mapzen.speakerbox.Speakerbox;
-
 import java.util.ArrayList;
-import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,10 +34,6 @@ public class MainActivity extends AppCompatActivity {
         screenList = new ArrayList<>();
         screenList.add(MainFragment.newInstance());
         screenList.add(SmartHomeFragment.newInstance());
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, MainFragment.newInstance())
-                .commit();
 
         tvStatus = (TextView) findViewById(R.id.tvStatus);
 
@@ -65,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 speakerbox.play("SWIPING RIGHT");
 
                 Log.e("SwipeLog", "x : " + x);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, SmartHomeFragment.newInstance()).commit();
                 x++;
 
             }

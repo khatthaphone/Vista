@@ -1,4 +1,4 @@
-package com.imaginecup.bug5.vista.fragment.emergency;
+package com.imaginecup.bug5.vista.fragment.caller;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,14 +13,14 @@ import com.imaginecup.bug5.vista.R;
 /**
  * Created by nuuneoi on 11/16/2014.
  */
-public class SmartHomeFragment extends Fragment {
+public class CallerFrament extends Fragment {
 
-    public SmartHomeFragment() {
+    public CallerFrament() {
         super();
     }
 
-    public static SmartHomeFragment newInstance() {
-        SmartHomeFragment fragment = new SmartHomeFragment();
+    public static CallerFrament newInstance() {
+        CallerFrament fragment = new CallerFrament();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
