@@ -1,4 +1,4 @@
-package com.imaginecup.bug5.vista.fragment.caller;
+package com.imaginecup.bug5.vista.fragment.smarthome;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,16 +14,16 @@ import com.mapzen.speakerbox.Speakerbox;
 /**
  * Created by nuuneoi on 11/16/2014.
  */
-public class CallerFragment extends Fragment {
+public class SmartHomeFunctionFragment extends Fragment {
 
     Speakerbox speakerbox;
 
-    public CallerFragment() {
+    public SmartHomeFunctionFragment() {
         super();
     }
 
-    public static CallerFragment newInstance() {
-        CallerFragment fragment = new CallerFragment();
+    public static SmartHomeFunctionFragment newInstance() {
+        SmartHomeFunctionFragment fragment = new SmartHomeFunctionFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -34,8 +34,6 @@ public class CallerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
 
-        speakerbox = new Speakerbox(getActivity().getApplication());
-        speakerbox.play("Caller Screen");
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
 
@@ -45,7 +43,7 @@ public class CallerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_caller, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_smart_home, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
@@ -60,7 +58,7 @@ public class CallerFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
-        speakerbox.play("You are on Caller");
+        speakerbox.play("You are on Smart Home");
     }
 
     @Override

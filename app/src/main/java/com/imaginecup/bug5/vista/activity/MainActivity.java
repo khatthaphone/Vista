@@ -1,23 +1,36 @@
 package com.imaginecup.bug5.vista.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.github.pwittchen.swipe.library.Swipe;
 import com.github.pwittchen.swipe.library.SwipeListener;
 import com.imaginecup.bug5.vista.R;
+import com.imaginecup.bug5.vista.dao.SmartHome;
 import com.imaginecup.bug5.vista.fragment.MainFragment;
 import com.imaginecup.bug5.vista.fragment.caller.CallerFragment;
 import com.imaginecup.bug5.vista.fragment.emergency.EmergencyFragment;
 import com.imaginecup.bug5.vista.fragment.smarthome.SmartHomeFragment;
-import com.imaginecup.bug5.vista.utils.Constants;
+import com.imaginecup.bug5.vista.fragment.smarthome.SmartHomeFunctionFragment;
+import com.imaginecup.bug5.vista.util.Constants;
+import com.imaginecup.bug5.vista.util.CustomDateTime;
 import com.mapzen.speakerbox.Speakerbox;
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.MobileServiceException;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MobileServiceClient mClient;
+    MobileServiceTable<SmartHome> serviceTable;
 
     Swipe swipe;
     Speakerbox speakerbox;
@@ -34,38 +47,56 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        currentFragment = Constants.Fragments.MAIN_FRAGMENT;
+        try {
+            mClient = new MobileServiceClient("https://bug5testtodoapp.azurewebsites.net",
+                    this
+            );
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
-        switchFragment(DIRECTION_NONE, currentFragment);
+        serviceTable = mClient.getTable("smart_home", SmartHome.class);
+        try {
+            List<SmartHome> result = serviceTable.execute().get();
+
+            String deviceType = result.get(1).getDeviceType().toString();
+            Toast.makeText(getApplicationContext(), deviceType, Toast.LENGTH_LONG).show();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (MobileServiceException e) {
+            e.printStackTrace();
+        }
+
+
+        getSupportFragmentManager().beginTransaction().add(R.id.contentContainer, MainFragment.newInstance(), Constants.Fragments.MAIN_FRAGMENT).commit();
+        currentFragment = Constants.Fragments.MAIN_FRAGMENT;
 
         swipe = new Swipe();
         speakerbox = new Speakerbox(getApplication());
         swipe.addListener(new SwipeListener() {
             @Override
             public void onSwipingLeft(final MotionEvent event) {
-                speakerbox.play("SWIPING LEFT");
             }
 
             @Override
             public void onSwipedLeft(final MotionEvent event) {
-                speakerbox.play("SWIPED LEFT");
                 switchFragment(DIRECTION_LEFT, currentFragment);
             }
 
             @Override
             public void onSwipingRight(final MotionEvent event) {
-                speakerbox.play("SWIPING RIGHT");
             }
 
             @Override
             public void onSwipedRight(final MotionEvent event) {
-                speakerbox.play("SWIPED RIGHT");
                 switchFragment(DIRECTION_RIGHT, currentFragment);
             }
 
             @Override
             public void onSwipingUp(final MotionEvent event) {
-                speakerbox.play("SWIPING up");
             }
 
             @Override
@@ -75,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwipingDown(final MotionEvent event) {
-                speakerbox.play("SWIPING DOWN");
             }
 
             @Override
@@ -94,8 +124,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void switchFragment(int direction, String currentFragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = MainFragment.newInstance();
-        String fragmentTag = Constants.Fragments.MAIN_FRAGMENT;
+        Fragment fragment = null;
+        String fragmentTag = null;
+        String toastText = null;
 
         switch (currentFragment) {
             case Constants.Fragments.MAIN_FRAGMENT:
@@ -106,18 +137,18 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTag = Constants.Fragments.CALLER_FRAGMENT;
                         fragmentTransaction.setCustomAnimations(R.anim.anim_swipe_from_right, R.anim.anim_swipe_to_left);
 
-                        Toast.makeText(getApplicationContext(), Constants.Fragments.CALLER_FRAGMENT, Toast.LENGTH_SHORT).show();
+                        toastText = Constants.Fragments.CALLER_FRAGMENT;
                         break;
                     case DIRECTION_RIGHT:
                         fragment = SmartHomeFragment.newInstance();
                         fragmentTag = Constants.Fragments.SMART_HOME_FRAGMENT;
                         fragmentTransaction.setCustomAnimations(R.anim.anim_swipe_from_left, R.anim.anim_swipe_to_right);
 
-                        Toast.makeText(getApplicationContext(), Constants.Fragments.SMART_HOME_FRAGMENT, Toast.LENGTH_SHORT).show();
+                        toastText = Constants.Fragments.SMART_HOME_FRAGMENT;
                         break;
                     case DIRECTION_DOWN:
 
-                        speakerbox.play("It is 12 o'clock");
+                        speakerbox.play("It's " + CustomDateTime.formatDate(CustomDateTime.getCurrentDateTime()) + "minute");
 
                         break;
                     case DIRECTION_UP:
@@ -125,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTag = Constants.Fragments.EMERGENCY_FRAGMENT;
                         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
-                        Toast.makeText(getApplicationContext(), Constants.Fragments.SMART_HOME_FRAGMENT, Toast.LENGTH_SHORT).show();
+                        toastText = Constants.Fragments.SMART_HOME_FRAGMENT;
                         break;
                     default:
 
@@ -137,10 +168,13 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (direction) {
                     case DIRECTION_LEFT:
-
                         break;
                     case DIRECTION_RIGHT:
+                        fragment = MainFragment.newInstance();
+                        fragmentTag = Constants.Fragments.MAIN_FRAGMENT;
+                        fragmentTransaction.setCustomAnimations(R.anim.anim_swipe_from_left, R.anim.anim_swipe_to_right);
 
+                        toastText = Constants.Fragments.MAIN_FRAGMENT;
                         break;
                     case DIRECTION_DOWN:
 
@@ -153,13 +187,21 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (direction) {
                     case DIRECTION_LEFT:
+                        fragment = MainFragment.newInstance();
+                        fragmentTag = Constants.Fragments.MAIN_FRAGMENT;
+                        fragmentTransaction.setCustomAnimations(R.anim.anim_swipe_from_right, R.anim.anim_swipe_to_left);
 
+                        toastText = Constants.Fragments.MAIN_FRAGMENT;
                         break;
                     case DIRECTION_RIGHT:
 
                         break;
                     case DIRECTION_DOWN:
+                        fragment = SmartHomeFunctionFragment.newInstance();
+                        fragmentTag = Constants.Fragments.SMART_HOME_FUNCTION_FRAGMENT;
+                        fragmentTransaction.setCustomAnimations(R.anim.anim_swipe_from_above, R.anim.anim_swipe_to_below);
 
+                        toastText = Constants.Fragments.SMART_HOME_FUNCTION_FRAGMENT;
                         break;
                 }
 
@@ -177,14 +219,19 @@ public class MainActivity extends AppCompatActivity {
                     case DIRECTION_DOWN:
 
                         break;
+                    case DIRECTION_UP:
+
+                        break;
                 }
 
                 break;
         }
 
-
-        fragmentTransaction.replace(R.id.contentContainer, fragment, fragmentTag);
-        fragmentTransaction.commit();
-        this.currentFragment = fragmentTag;
+        if (fragment != null && fragmentTag != null && toastText != null) {
+            fragmentTransaction.replace(R.id.contentContainer, fragment, fragmentTag);
+            fragmentTransaction.commit();
+            Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+            this.currentFragment = fragmentTag;
+        }
     }
 }
