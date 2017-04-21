@@ -11,6 +11,7 @@ public class Constants {
         public static final String CALLER_FRAGMENT = "CallerFragment";
         public static final String EMERGENCY_FRAGMENT = "EmergencyFragment";
         public static final String SMART_HOME_FRAGMENT = "SmartHomeFragment";
+        public static final String SMART_HOME_FUNCTION_FRAGMENT = "SmartHomeFunctionFragment";
     }
 
 }
