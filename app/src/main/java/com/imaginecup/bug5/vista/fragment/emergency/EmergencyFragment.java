@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.imaginecup.bug5.vista.R;
-import com.imaginecup.bug5.vista.dao.Dao;
 
 
 /**
@@ -16,7 +15,6 @@ import com.imaginecup.bug5.vista.dao.Dao;
  */
 public class EmergencyFragment extends Fragment {
 
-    Dao dao;
 
     public EmergencyFragment() {
         super();
@@ -50,9 +48,6 @@ public class EmergencyFragment extends Fragment {
     private void init(Bundle savedInstanceState) {
         // Init Fragment level's variable(s) here
 
-        if (dao != null) {
-
-        }
 
     }
 

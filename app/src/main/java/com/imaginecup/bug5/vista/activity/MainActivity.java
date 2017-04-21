@@ -1,9 +1,9 @@
 package com.imaginecup.bug5.vista.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -14,7 +14,8 @@ import com.imaginecup.bug5.vista.fragment.MainFragment;
 import com.imaginecup.bug5.vista.fragment.caller.CallerFragment;
 import com.imaginecup.bug5.vista.fragment.emergency.EmergencyFragment;
 import com.imaginecup.bug5.vista.fragment.smarthome.SmartHomeFragment;
-import com.imaginecup.bug5.vista.utils.Constants;
+import com.imaginecup.bug5.vista.util.Constants;
+import com.imaginecup.bug5.vista.util.CustomDateTime;
 import com.mapzen.speakerbox.Speakerbox;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwipedUp(final MotionEvent event) {
+                switchFragment(DIRECTION_UP, currentFragment);
             }
 
             @Override
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwipedDown(final MotionEvent event) {
-
+                switchFragment(DIRECTION_DOWN, currentFragment);
             }
         });
 
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case DIRECTION_DOWN:
 
-                        speakerbox.play("It is 12 o'clock");
+                        speakerbox.play("It's " + CustomDateTime.formatDate(CustomDateTime.getCurrentDateTime()) + "minute");
 
                         break;
                     case DIRECTION_UP:
