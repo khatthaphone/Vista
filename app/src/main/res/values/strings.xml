@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Vista</string>
+
+    <string name="main_screen_txt">Main Screen</string>
+    <string name="caller_screen_txt">Caller Screen</string>
+    <string name="smart_home_screen_txt">Smart Home Screen</string>
+    <string name="emergency_screen_txt">Emergency Screen</string>
+
 </resources>

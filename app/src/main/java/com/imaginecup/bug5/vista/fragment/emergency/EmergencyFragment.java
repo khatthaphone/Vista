@@ -60,7 +60,8 @@ public class EmergencyFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
-        speakerbox.play("Emergency");
+
+        speakerbox.play(getResources().getString(R.string.emergency_screen_txt));
     }
 
     @Override

@@ -60,7 +60,8 @@ public class SmartHomeFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
-        speakerbox.play("Smart Home");
+
+        speakerbox.play(getResources().getString(R.string.smart_home_screen_txt));
     }
 
     @Override

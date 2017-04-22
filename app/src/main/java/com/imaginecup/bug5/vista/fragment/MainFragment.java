@@ -65,7 +65,7 @@ public class MainFragment extends Fragment {
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
 
-        speakerbox.play("You are on Main Page");
+        speakerbox.play(getResources().getString(R.string.main_screen_txt));
     }
 
     @Override

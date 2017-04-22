@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="Emergency"
-        android:textSize="64sp"/>
+        android:textSize="64sp"
+        android:textColor="@android:color/white"/>
 
 </LinearLayout>

@@ -60,8 +60,7 @@ public class CallerFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
-        speakerbox.play("Caller");
-    }
+        speakerbox.play(getResources().getString(R.string.caller_screen_txt));    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
