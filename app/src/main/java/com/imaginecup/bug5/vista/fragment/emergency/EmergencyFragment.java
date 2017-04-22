@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.imaginecup.bug5.vista.R;
-import com.imaginecup.bug5.vista.dao.Dao;
 import com.mapzen.speakerbox.Speakerbox;
 
 
@@ -16,8 +15,6 @@ import com.mapzen.speakerbox.Speakerbox;
  * Created by nuuneoi on 11/16/2014.
  */
 public class EmergencyFragment extends Fragment {
-
-    Dao dao;
 
     Speakerbox speakerbox;
 
@@ -38,7 +35,7 @@ public class EmergencyFragment extends Fragment {
         init(savedInstanceState);
 
         speakerbox = new Speakerbox(getActivity().getApplication());
-        speakerbox.play("Emergency Screen");
+
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
@@ -56,10 +53,6 @@ public class EmergencyFragment extends Fragment {
     private void init(Bundle savedInstanceState) {
         // Init Fragment level's variable(s) here
 
-        if (dao != null) {
-
-        }
-
     }
 
     @SuppressWarnings("UnusedParameters")
@@ -67,6 +60,7 @@ public class EmergencyFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
+        speakerbox.play("Emergency");
     }
 
     @Override

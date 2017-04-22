@@ -47,30 +47,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            mClient = new MobileServiceClient("https://bug5testtodoapp.azurewebsites.net",
-                    this
-            );
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        serviceTable = mClient.getTable("smart_home", SmartHome.class);
-        try {
-            List<SmartHome> result = serviceTable.execute().get();
-
-            String deviceType = result.get(1).getDeviceType().toString();
-            Toast.makeText(getApplicationContext(), deviceType, Toast.LENGTH_LONG).show();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (MobileServiceException e) {
-            e.printStackTrace();
-        }
-
-
         getSupportFragmentManager().beginTransaction().add(R.id.contentContainer, MainFragment.newInstance(), Constants.Fragments.MAIN_FRAGMENT).commit();
         currentFragment = Constants.Fragments.MAIN_FRAGMENT;
 

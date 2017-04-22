@@ -35,7 +35,6 @@ public class SmartHomeFragment extends Fragment {
         init(savedInstanceState);
 
         speakerbox = new Speakerbox(getActivity().getApplication());
-        speakerbox.play("Smart Home Screen");
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
@@ -61,7 +60,7 @@ public class SmartHomeFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
-        speakerbox.play("You are on Smart Home");
+        speakerbox.play("Smart Home");
     }
 
     @Override
